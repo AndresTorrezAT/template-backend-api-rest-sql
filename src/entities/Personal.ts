@@ -18,13 +18,15 @@ export class Personal extends BaseEntity {
     @Column()
     fecha_inicio_contratacion: Date;
 
-    @Column()
+    @Column({
+        default: null 
+    })
     fecha_fin_contratacion: Date;
 
-    @Column()
+    @Column({ nullable: true })
     perfil: string;
 
-    @Column()
+    @Column({ nullable: true })
     cargo: string;
 
     @Column({

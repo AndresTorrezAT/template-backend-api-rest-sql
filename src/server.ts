@@ -1,19 +1,26 @@
-import express from 'express';
+
+import express, { Application } from 'express';
 import cors from 'cors';
+import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
-import { dbConnection } from '../database/config.js';
+import { AppDataSource } from './config/db.config';
 
 // Importar las rutas
-import authRoutes from '../routes/auth.routes.js';
+import personalRoutes from './routes/personal.routes';
 
 
 class Server {
+
+    app: any; // Declaramos que 'app' es de tipo 'express.Application'
+    port: number; // 'port' es un número
+    paths: any; // 'paths' es un objeto con claves de tipo 'string' y valores de tipo 'string'
+
     constructor() {
         this.app = express();
-        this.port = process.env.PORT;
+        this.port = 3000;
 
         this.paths = {
-            auth: '/api/auth',
+            personal: '/api/personal',
 
         };
 
@@ -28,10 +35,15 @@ class Server {
     }
 
     async conectarDB() {
-        await dbConnection();
+        await AppDataSource.initialize();
+        console.log("Database connected");
     }
 
     middlewares() {
+
+        // Registro de solicitudes HTTP con Morgan
+        this.app.use(morgan('dev')); // Habilitamos Morgan en modo 'dev'
+
         // CORS
         this.app.use(cors());
 
@@ -39,7 +51,7 @@ class Server {
         this.app.use(express.json());
 
         // Directorio público
-        this.app.use(express.static('public'));
+        // this.app.use(express.static('public'));
 
         // Fileupload - Carga de archivos
         this.app.use(
@@ -52,7 +64,7 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.paths.auth, authRoutes);
+        this.app.use(this.paths.personal, personalRoutes);
 
     }
 

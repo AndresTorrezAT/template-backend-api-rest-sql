@@ -1,10 +1,6 @@
-import express from 'express'
-import morgan from 'morgan'
-import cors from 'cors'
+import "reflect-metadata"; // Siempre al inicio
+import Server from './server';
 
-const app = express()
+const server = new Server();
 
-app.use(morgan('dev'))
-app.use(cors())
-
-export default app;
+server.listen();

@@ -1,12 +1,11 @@
 import { Router } from 'express';
-import { crearPersonal } from '../controllers/personal.controllers';
-
+import { crearPersonal, obtenerPersonal } from '../controllers/personal.controller';
 
 
 const router = Router();
 
-router.post('/',[
+router.post('/', crearPersonal); // Ruta válida
 
-], crearPersonal);
+router.get('/', obtenerPersonal); // Ruta válida
 
 export default router;
