@@ -1,26 +1,30 @@
 
-import express, { Application } from 'express';
+import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import fileUpload from 'express-fileupload';
 import { AppDataSource } from './config/db.config';
 
 // Importar las rutas
+import authRoutes from './routes/auth.routes';
+import perfilRoutes from './routes/perfiles.routes';
 import personalRoutes from './routes/personal.routes';
 
 
 class Server {
 
     app: any; // Declaramos que 'app' es de tipo 'express.Application'
-    port: number; // 'port' es un número
+    port: any; // 'port' es un número
     paths: any; // 'paths' es un objeto con claves de tipo 'string' y valores de tipo 'string'
 
     constructor() {
         this.app = express();
-        this.port = 3000;
+        this.port = process.env.SERVER_PORT;
 
         this.paths = {
-            personal: '/api/personal',
+            auth:       '/api/auth',
+            personal:   '/api/personal',
+            perfil:     '/api/perfil',
 
         };
 
@@ -64,8 +68,9 @@ class Server {
     }
 
     routes() {
+        this.app.use(this.paths.auth, authRoutes);
+        this.app.use(this.paths.perfil, perfilRoutes);
         this.app.use(this.paths.personal, personalRoutes);
-
     }
 
     listen() {
