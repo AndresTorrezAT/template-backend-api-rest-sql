@@ -1,10 +1,11 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Personal } from "./Personal";
 
 
 @Entity()
 export class Perfil extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid') // Genera un UUID como string
+    id: string;
 
     @Column()
     usuario: string;
@@ -18,8 +19,9 @@ export class Perfil extends BaseEntity {
     @Column({ nullable: true })
     permisos: string;
 
-    @Column({ nullable: true })
-    personal: string;
+    // Relación inversa, no es necesario poner @JoinColumn en Perfil
+    @OneToOne(() => Personal, (personal) => personal.perfil )
+    personal: Personal;  // Puede ser null si no hay un Personal asociado
 
     @CreateDateColumn()
     fecha_creacion: Date;

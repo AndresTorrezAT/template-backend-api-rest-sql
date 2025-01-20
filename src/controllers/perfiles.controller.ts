@@ -1,14 +1,22 @@
 import type { Request, Response } from "express";
 import { Perfil } from "../entities/Perfil";
+import { Personal } from "../entities/Personal";
 
 export const crearPerfil = async( req: Request, res: Response ): Promise<any> => {
     try {
-        const { usuario, password, tipo } = req.body;
+        const { usuario, password, tipo, personal_id } = req.body;
+
+        // Verificar si el Personal con el ID proporcionado existe
+        const personal = await Personal.findOne({ where: { id: personal_id } });
+        if (!personal) {
+            return res.status(404).json({ message: 'Personal no encontrado' });
+        }
 
         const perfil = new Perfil();
         perfil.usuario = usuario;
         perfil.password = password;
         perfil.tipo = tipo;
+        perfil.personal = personal;
         
         await perfil.save();
 
@@ -22,4 +30,8 @@ export const crearPerfil = async( req: Request, res: Response ): Promise<any> =>
             message: 'Error interno del servidor'
         });
     }
+}
+
+export const obtenerPer = async () => {
+
 }

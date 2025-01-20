@@ -8,6 +8,7 @@ export const login = async( req: Request, res: Response ): Promise<any> => {
         // Buscar un único perfil que coincida con el usuario
         const login = await Perfil.findOne({
             where: { usuario: usuario },  // Busca por el campo 'usuario'
+            relations: ["personal"],  // Incluir la relación 'personal' asociada al perfil
         });
 
         if (!login) {

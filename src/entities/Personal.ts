@@ -1,10 +1,11 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Perfil } from "./Perfil";
 
 
 @Entity()
 export class Personal extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid') // Genera un UUID como string
+    id: string;
 
     @Column()
     nombres: string;
@@ -23,8 +24,10 @@ export class Personal extends BaseEntity {
     })
     fecha_fin_contratacion: Date;
 
-    @Column({ nullable: true })
-    perfil: string;
+    // Relación de uno a uno con Perfil, siendo opcional (nullable: true)
+    @OneToOne(() => Perfil, (perfil) => perfil.personal, { nullable: true })  // Un Personal puede tener 0 o 1 Perfil
+    @JoinColumn({ name: 'perfil' })  // Clave foránea que apunta a Perfil
+    perfil: Perfil | null;  // Puede ser null si no tiene un Perfil asociado
 
     @Column({ nullable: true })
     cargo: string;

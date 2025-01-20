@@ -1,19 +1,21 @@
 import type { Request, Response } from "express";
 import { Personal } from "../entities/Personal";
 
+
 export const crearPersonal = async( req: Request, res: Response ): Promise<any> => {
     try {
-        const { nombres, apellidos, ci, fecha_inicio_contratacion } = req.body;
+        const { nombres, apellidos, ci, fecha_inicio_contratacion} = req.body;
 
-        const personal = new Personal();
-        personal.nombres = nombres;
-        personal.apellidos = apellidos;
-        personal.ci = ci;
-        personal.fecha_inicio_contratacion = fecha_inicio_contratacion;
+        // Crear el nuevo Personal
+        const newPersonal = new Personal();
+        newPersonal.nombres = nombres;
+        newPersonal.apellidos = apellidos;
+        newPersonal.ci = ci;
+        newPersonal.fecha_inicio_contratacion = fecha_inicio_contratacion;
         
-        await personal.save();
+        await newPersonal.save();  // Guardar en la base de datos
 
-        return res.json(personal);
+        return res.status(201).json(newPersonal);
 
     } catch (error) {
         console.log(error);
@@ -25,6 +27,15 @@ export const crearPersonal = async( req: Request, res: Response ): Promise<any> 
     }
 }
 
-export const obtenerPersonal = async () => {
+export const obtenerPersonalById = async( req: Request, res: Response ): Promise<any> => {
+
+    const { id } = req.params;
+
+    const personal = await Personal.findOne({
+        where: { id: id },
+        relations: ['perfil']  // Carga el perfil relacionado
+    });
+
+    return res.status(200).json(personal);
 
 }
