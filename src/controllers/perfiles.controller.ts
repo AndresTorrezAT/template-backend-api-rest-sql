@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import bcryptjs from 'bcryptjs';
 import { Perfil } from "../entities/Perfil";
 import { Personal } from "../entities/Personal";
 
@@ -14,9 +15,13 @@ export const crearPerfil = async( req: Request, res: Response ): Promise<any> =>
 
         const perfil = new Perfil();
         perfil.usuario = usuario;
-        perfil.password = password;
+        // perfil.password = password;
         perfil.tipo = tipo;
         perfil.personal = personal;
+
+        //ENCRIPTAR CONTRASEÑA
+        const salt = bcryptjs.genSaltSync();
+        perfil.password = bcryptjs.hashSync( password, salt );
         
         await perfil.save();
 

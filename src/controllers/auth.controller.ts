@@ -1,5 +1,7 @@
 import type { Request, Response } from "express";
 import { Perfil } from "../entities/Perfil";
+import { generarJWT } from "../utils/jwt.util";
+import bcryptjs from 'bcryptjs';
 
 export const login = async( req: Request, res: Response ): Promise<any> => {
     try {
@@ -14,10 +16,19 @@ export const login = async( req: Request, res: Response ): Promise<any> => {
         if (!login) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
-    
+        
+        const validPassword = bcryptjs.compareSync( password, login.password );
 
-        if (login.password === password) {  // Esto es solo un ejemplo, deberías usar un hash para la contraseña en producción
-            return res.json(login);  // Aquí devuelves la información del perfil
+        if (validPassword) {  // Esto es solo un ejemplo, deberías usar un hash para la contraseña en producción
+
+            // Generar el JWT
+            const token = await generarJWT( usuario.id );
+
+            res.json({
+                login,
+                token
+            });
+
         } else {
             return res.status(401).json({ message: 'Contraseña incorrecta' });
         }
