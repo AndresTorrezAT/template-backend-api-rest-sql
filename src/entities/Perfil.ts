@@ -19,6 +19,11 @@ export class Perfil extends BaseEntity {
     @Column({ nullable: true })
     permisos: string;
 
+    @Column({
+        default: true 
+    })
+    active: boolean;
+
     // Relación inversa, no es necesario poner @JoinColumn en Perfil
     @OneToOne(() => Personal, (personal) => personal.perfil )
     personal: Personal;  // Puede ser null si no hay un Personal asociado

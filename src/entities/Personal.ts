@@ -35,11 +35,6 @@ export class Personal extends BaseEntity {
     @Column({
         default: true 
     })
-    active: boolean;
-
-    @Column({
-        default: true 
-    })
     estado: boolean;
 
     @CreateDateColumn()

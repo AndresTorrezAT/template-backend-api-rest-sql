@@ -1,49 +1,47 @@
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { Perfil } from '../entities/Perfil';
 
-const validarJWT = async( req: Request, res: Response, next ) => {
-
-    try {
-
-        const token = req.header('x-token');
-
-        if ( !token ) {
-            return res.status(401).json({
-                status: 401,
-                error: 'TOKEN_INVALID',
-                message: 'No hay token en la petición.'
-            });
-        }
-
-        const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY );// se va al catch cuando algo falla o no es valido el token
-        const usuario = await Usuario.findById( uid ).populate('permiso');
-
-        if ( !usuario ) {
-            return res.status(401).json({
-                status: 401,
-                error: 'TOKEN_INVALID',
-                message: 'Token no valido'
-            });
-        }
-
-        if ( !usuario.estado ) {
-            return res.status(401).json({
-                status: 401,
-                error: 'TOKEN_INVALID',
-                message: 'Token no valido'
-            });
-        }
-        
-        req.usuario = usuario;
-
-        next();
-        
-    } catch (error) {
-        console.log(error);
-        res.status(401).json({
-            status: 401,
-            error: 'TOKEN_INVALID',
-            message: 'Token no valido'
-        });
-        
-    }
-    
+interface CustomJwtPayload {
+  uid: string;
 }
+
+export const validarJWT = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  try {
+    const token = req.header('x-token');
+    if (!token) {
+      return res.status(401).json({
+        status: 401,
+        error: 'TOKEN_INVALID',
+        message: 'No hay token en la petición.',
+      });
+    }
+
+    if (!process.env.SECRETORPRIVATEKEY) {
+      throw new Error('El SECRETORPRIVATEKEY no está definido en las variables de entorno.');
+    }
+
+    const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY) as CustomJwtPayload;
+
+    const perfil = await Perfil.findOne({ where: { id: uid } });
+
+    if (!perfil || !perfil.active) {
+      return res.status(401).json({
+        status: 401,
+        error: 'TOKEN_INVALID',
+        message: 'Token no válido o perfil inactivo.',
+      });
+    }
+
+    req.perfil = perfil;
+
+    next();
+    
+  } catch (error) {
+    res.status(401).json({
+      status: 401,
+      error: 'TOKEN_INVALID',
+      message: 'Token no válido.',
+    });
+  }
+};
