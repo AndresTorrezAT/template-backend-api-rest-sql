@@ -1,13 +1,13 @@
-import type { Request, Response } from "express";
+import { Request, Response } from "express";
 import { Perfil } from "../entities/Perfil";
 import { generarJWT } from "../utils/jwt.util";
 import bcryptjs from 'bcryptjs';
 
 export const login = async( req: Request, res: Response ): Promise<any> => {
+
     try {
         const { usuario, password } = req.body;
 
-        // Buscar un único perfil que coincida con el usuario
         const perfil = await Perfil.findOne({
             where: { usuario: usuario },  // Busca por el campo 'usuario'
             relations: ["personal"],  // Incluir la relación 'personal' asociada al perfil
@@ -19,7 +19,7 @@ export const login = async( req: Request, res: Response ): Promise<any> => {
         
         const validPassword = bcryptjs.compareSync( password, perfil.password );
 
-        if (validPassword) {  // Esto es solo un ejemplo, deberías usar un hash para la contraseña en producción
+        if (validPassword) {
 
             // Generar el JWT
             const token = await generarJWT( perfil.id );
@@ -41,4 +41,5 @@ export const login = async( req: Request, res: Response ): Promise<any> => {
             message: 'Error interno del servidor'
         });
     }
+
 }

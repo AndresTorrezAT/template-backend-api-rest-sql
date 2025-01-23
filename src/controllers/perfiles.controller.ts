@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import { Request, Response } from "express";
 import bcryptjs from 'bcryptjs';
 import { Perfil } from "../entities/Perfil";
 import { Personal } from "../entities/Personal";

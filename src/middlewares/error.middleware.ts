@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from 'express'
 
 export const validarCampos = ( req:Request , res:Response, next:NextFunction ): any => {
     
-    // const errors = validationResult(req);
     const result: Result = validationResult(req);
    
     if (!result.isEmpty()) {
