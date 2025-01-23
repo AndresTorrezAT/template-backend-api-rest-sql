@@ -9,6 +9,7 @@ interface CustomJwtPayload {
 export const validarJWT = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
     const token = req.header('x-token');
+
     if (!token) {
       return res.status(401).json({
         status: 401,
@@ -21,9 +22,9 @@ export const validarJWT = async (req: Request, res: Response, next: NextFunction
       throw new Error('El SECRETORPRIVATEKEY no está definido en las variables de entorno.');
     }
 
-    const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY) as CustomJwtPayload;
+    const jwtDecod = jwt.verify(token, process.env.SECRETORPRIVATEKEY) as CustomJwtPayload;
 
-    const perfil = await Perfil.findOne({ where: { id: uid } });
+    const perfil = await Perfil.findOne({ where: { id: jwtDecod.uid } });
 
     if (!perfil || !perfil.active) {
       return res.status(401).json({

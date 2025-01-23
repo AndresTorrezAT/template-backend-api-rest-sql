@@ -8,24 +8,24 @@ export const login = async( req: Request, res: Response ): Promise<any> => {
         const { usuario, password } = req.body;
 
         // Buscar un único perfil que coincida con el usuario
-        const login = await Perfil.findOne({
+        const perfil = await Perfil.findOne({
             where: { usuario: usuario },  // Busca por el campo 'usuario'
             relations: ["personal"],  // Incluir la relación 'personal' asociada al perfil
         });
 
-        if (!login) {
+        if (!perfil) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
         
-        const validPassword = bcryptjs.compareSync( password, login.password );
+        const validPassword = bcryptjs.compareSync( password, perfil.password );
 
         if (validPassword) {  // Esto es solo un ejemplo, deberías usar un hash para la contraseña en producción
 
             // Generar el JWT
-            const token = await generarJWT( usuario.id );
+            const token = await generarJWT( perfil.id );
 
             res.json({
-                login,
+                perfil,
                 token
             });
 

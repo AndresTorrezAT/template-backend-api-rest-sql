@@ -11,8 +11,8 @@ router.post('/', crearPersonal); // Ruta válida
 router.get('/:id', obtenerPersonalById); // Ruta válida
 
 router.get('/',[
-    validarJWT,
-    validarCampos
+    // validarJWT,
+    // validarCampos
 ], obtenerPersonales);
 
 export default router;

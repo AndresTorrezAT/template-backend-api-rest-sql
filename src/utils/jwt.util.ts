@@ -9,7 +9,7 @@ export const generarJWT = ( uid = '' ) => {
         // Validar que la variable de entorno está definida
         const secretKey = process.env.SECRETORPRIVATEKEY;
         if (!secretKey) {
-        return reject('Falta la clave secreta para firmar el token (SECRETORPRIVATEKEY)');
+            return reject('Falta la clave secreta para firmar el token (SECRETORPRIVATEKEY)');
         }
 
         jwt.sign( payload, secretKey, {
