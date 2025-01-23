@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { crearPersonal, obtenerPersonalById } from '../controllers/personal.controller';
+import { crearPersonal, obtenerPersonalById, obtenerPersonales } from '../controllers/personal.controller';
 import { validarJWT } from '../middlewares/auth.middleware';
-import validarCampos from '../middlewares/error.middleware';
+import { validarCampos } from '../middlewares/error.middleware';
+
 
 const router = Router();
 
@@ -12,6 +13,6 @@ router.get('/:id', obtenerPersonalById); // Ruta válida
 router.get('/',[
     validarJWT,
     validarCampos
-], obtenerListaDelPersonal);
+], obtenerPersonales);
 
 export default router;

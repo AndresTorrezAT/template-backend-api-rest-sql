@@ -33,7 +33,9 @@ export const validarJWT = async (req: Request, res: Response, next: NextFunction
       });
     }
 
-    req.perfil = perfil;
+    // req.perfil = perfil;
+    // Forzar el tipo para incluir `perfil` temporalmente
+    (req as any).perfil = perfil;
 
     next();
     

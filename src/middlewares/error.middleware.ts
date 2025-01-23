@@ -1,18 +1,18 @@
+import { Result, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express'
-import { ValidationError, validationResult } from 'express-validator';
 
-const validarCampos = ( req:Request , res:Response, next:NextFunction ) => {
-
-    const errors = validationResult(req);
+export const validarCampos = ( req:Request , res:Response, next:NextFunction ): any => {
+    
+    // const errors = validationResult(req);
+    const result: Result = validationResult(req);
    
-    if (!errors.isEmpty()) {
+    if (!result.isEmpty()) {
         return res.status(400).json({
             status: 400,
             error: "BAD_REQUEST",
             message: "La solicitud contiene campos inválidos o faltantes.",
-            details: errors
-                .array()
-                .filter((error): error is ValidationError & { param: string } => 'param' in error)
+            details: result.array()
+                // .filter((error): error is ValidationError & { param: string } => 'param' in error)
                 .map(error => ({
                     field: error.param, // El campo que falló
                     message: error.msg  // El mensaje de error
@@ -24,4 +24,4 @@ const validarCampos = ( req:Request , res:Response, next:NextFunction ) => {
 
 }
 
-export default validarCampos;
+// export default validarCampos;

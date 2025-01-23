@@ -39,3 +39,17 @@ export const obtenerPersonalById = async( req: Request, res: Response ): Promise
     return res.status(200).json(personal);
 
 }
+
+
+export const obtenerPersonales = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const personales = await Personal.find({
+            relations: ['perfil'] // Carga la relación con 'perfil'
+        });
+
+        return res.status(200).json(personales);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error al obtener los personales.' });
+    }
+};
