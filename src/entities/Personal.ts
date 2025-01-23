@@ -20,9 +20,10 @@ export class Personal extends BaseEntity {
     fecha_inicio_contratacion: Date;
 
     @Column({
-        default: null 
+        nullable: true, // Puede ser nula
+        default: null // Explicita el valor por defecto 
     })
-    fecha_fin_contratacion: Date;
+    fecha_fin_contratacion: Date | null;
 
     // Relación de uno a uno con Perfil, siendo opcional (nullable: true)
     @OneToOne(() => Perfil, (perfil) => perfil.personal, { nullable: true })  // Un Personal puede tener 0 o 1 Perfil
