@@ -25,3 +25,8 @@ export const deletePersonal = async (id: string): Promise<boolean> => {
     const result:any = await Personal.delete(id);
     return result.affected > 0;
 };
+
+export const softDeletePersonal = async (id: string): Promise<boolean> => {
+    const result:any = await Personal.createQueryBuilder().softDelete().where("id = :id", { id }).execute();
+    return result.affected > 0;
+};
