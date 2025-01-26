@@ -1,6 +1,6 @@
 import { Personal } from "../entities/Personal";
 
-export const createPersonal = async (data: Partial<Personal>): Promise<Personal> => {
+export const createPersonal = async (data:any): Promise<Personal> => {
     const newPersonal:any = Personal.create(data);
     await newPersonal.save();
     return newPersonal;

@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { crearPersonal, eliminarPersonal, obtenerPersonalPorId, obtenerListaDePersonal, actualizarPersonal, actualizarPersonalParcial } from '../controllers/personal.controller';
+
+import { actualizarPersonal, actualizarPersonalParcial, crearPersonal, eliminarPersonal, obtenerListaDePersonal, obtenerPersonalPorId } from '../controllers/personal.controller';
 import { validarJWT } from '../middlewares/auth.middleware';
 import { validarCampos } from '../middlewares/error.middleware';
 
@@ -9,10 +10,7 @@ router.post('/', crearPersonal);
 
 router.get('/:id', obtenerPersonalPorId);
 
-router.get('/',[
-    // validarJWT,
-    // validarCampos
-], obtenerListaDePersonal);
+router.get('/', obtenerListaDePersonal);
 
 router.put('/:id', actualizarPersonal);
 
