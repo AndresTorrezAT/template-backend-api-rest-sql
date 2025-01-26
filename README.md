@@ -17,5 +17,5 @@ Este es un template de servidor API REST construido con:
 
 1. Clona este repositorio:
    ```bash
-   git clone <[URL-DEL-REPO](https://github.com/AndresTorrezAT/template-backend-api-rest-sql.git)>
+   git clone <[template-backend-api-rest-sql](https://github.com/AndresTorrezAT/template-backend-api-rest-sql.git)>
    cd <template-backend-api-rest-sql>
