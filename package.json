@@ -1,5 +1,5 @@
 {
-  "name": "sistema-pos-backend",
+  "name": "template-backend-api-rest-sql",
   "version": "1.0.0",
   "main": "src/app.ts",
   "scripts": {
