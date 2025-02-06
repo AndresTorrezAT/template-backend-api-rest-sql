@@ -1,3 +1,4 @@
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 export const generarJWT = ( uid = '' ) => {
@@ -28,3 +29,21 @@ export const generarJWT = ( uid = '' ) => {
     });
 
 }
+
+export const hashPassword = ( password:any ) => {
+
+    //ENCRIPTAR CONTRASEÑA
+    const salt = bcryptjs.genSaltSync();
+    const password_hash = bcryptjs.hashSync( password, salt );
+
+    return password_hash;
+
+};
+
+export const comparePasswords = (password:any, hashedPassword:any) => {
+
+    const validPassword = bcryptjs.compareSync( password, hashedPassword );
+
+    return validPassword;
+};
+

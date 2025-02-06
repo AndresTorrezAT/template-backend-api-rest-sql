@@ -1,21 +1,39 @@
 import { Router } from 'express';
 
-import { actualizarPersonal, actualizarPersonalParcial, crearPersonal, eliminarPersonal, obtenerListaDePersonal, obtenerPersonalPorId } from '../controllers/personal.controller';
 import { validarJWT } from '../middlewares/auth.middleware';
 import { validarCampos } from '../middlewares/error.middleware';
 
+import { actualizarPersonal, 
+         crearPersonal, 
+         eliminarPersonal, 
+         obtenerListaDePersonal, 
+         obtenerPersonalPorId } from '../controllers/personal.controller';
+
 const router = Router();
 
-router.post('/', crearPersonal);
+router.post('/',[
+    // validarJWT,
+    validarCampos
+], crearPersonal);
 
-router.get('/:id', obtenerPersonalPorId);
+router.get('/:id',[
+    validarJWT,
+    validarCampos
+], obtenerPersonalPorId);
 
-router.get('/', obtenerListaDePersonal);
+router.get('/',[
+    validarJWT,
+    validarCampos
+], obtenerListaDePersonal);
 
-router.put('/:id', actualizarPersonal);
+router.put('/:id',[
+    validarJWT,
+    validarCampos
+], actualizarPersonal);
 
-router.patch('/:id', actualizarPersonalParcial);
-
-router.delete('/:id', eliminarPersonal);
+router.delete('/:id',[
+    validarJWT,
+    validarCampos
+], eliminarPersonal);
 
 export default router;

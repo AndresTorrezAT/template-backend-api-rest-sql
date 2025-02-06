@@ -1,0 +1,423 @@
+{
+	"info": {
+		"_postman_id": "2898daa7-124e-4e61-a212-2fb8197d5bf1",
+		"name": "Rest API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25832988",
+		"_collection_link": "https://besuto-srl.postman.co/workspace/Besuto-WorkSpace~898fd53c-6750-416d-8452-ccc9666f6eca/collection/25832988-2898daa7-124e-4e61-a212-2fb8197d5bf1?action=share&source=collection_link&creator=25832988"
+	},
+	"item": [
+		{
+			"name": "Personal",
+			"item": [
+				{
+					"name": "Crear Personal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\": \"Jhoselyn\",\r\n    \"apellidos\": \"Marca\",\r\n    \"ci\": \"87654321\",\r\n    \"fecha_inicio_contratacion\": \"2025-01-10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/personal",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Personal por Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/personal/3b2f238b-a8ef-4934-aa37-71c5273ab54c",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"personal",
+								"3b2f238b-a8ef-4934-aa37-71c5273ab54c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Lista De Personal",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/personal",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Personal",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombres\": \"Joaquin\",\r\n    \"apellidos\": \"Torrez\",\r\n    \"ci\": \"12345678\",\r\n    \"fecha_inicio_contratacion\": \"2025-01-23\",\r\n    \"fecha_fin_contratacion\": \"2026-01-23\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/personal/d216a01a-3db0-4909-8153-4bbf854751df",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"personal",
+								"d216a01a-3db0-4909-8153-4bbf854751df"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Personal",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/personal/f7e246f1-26df-4e7b-b1a8-59f91df9e0cf",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"personal",
+								"f7e246f1-26df-4e7b-b1a8-59f91df9e0cf"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Perfil",
+			"item": [
+				{
+					"name": "Crear Perfil",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuario\": \"jmarca\",\r\n    \"password\": \"1234567\",\r\n    \"tipo\": \"administrador\",\r\n    \"personal_id\": \"166b50c7-a9ce-4966-8db3-796577fa1a02\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/perfil",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"perfil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Perfil por Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/perfil/d8419c15-c133-475f-8ab3-c8e5abe16bdf",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"perfil",
+								"d8419c15-c133-475f-8ab3-c8e5abe16bdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Lista De Perfiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/perfil",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"perfil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar Estado De Perfil",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{server}}/api/perfil/estado/1baed059-7697-41f9-b475-6aa004ac18c7",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"perfil",
+								"estado",
+								"1baed059-7697-41f9-b475-6aa004ac18c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Password",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\": \"1234567\",\r\n    \"new_password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/perfil/actualizar-password/d8419c15-c133-475f-8ab3-c8e5abe16bdf",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"perfil",
+								"actualizar-password",
+								"d8419c15-c133-475f-8ab3-c8e5abe16bdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Perfil",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuario\": \"jmarca\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/api/perfil/1baed059-7697-41f9-b475-6aa004ac18c7",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"perfil",
+								"1baed059-7697-41f9-b475-6aa004ac18c7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = JSON.parse(pm.response.text());\r",
+							"pm.collectionVariables.set(\"token\", jsonData.token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario\": \"jmarca\",\r\n    \"password\": \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -8,7 +8,7 @@ interface CustomJwtPayload {
 
 export const validarJWT = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
   try {
-    const token = req.header('x-token');
+    const token = req.header('Authorization');
 
     if (!token) {
       return res.status(401).json({
@@ -26,7 +26,7 @@ export const validarJWT = async (req: Request, res: Response, next: NextFunction
 
     const perfil = await Perfil.findOne({ where: { id: jwtDecod.uid } });
 
-    if (!perfil || !perfil.active) {
+    if (!perfil || !perfil.estado) {
       return res.status(401).json({
         status: 401,
         error: 'TOKEN_INVALID',

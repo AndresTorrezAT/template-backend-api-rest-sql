@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
-import { Personal } from "../entities/Personal";
-import { createPersonal, getAllPersonales, getPersonalById, softDeletePersonal, updatePersonal } from "../services/personal.service";
+
+import { createPersonal, 
+         getAllPersonales, 
+         getPersonalById, 
+         softDeletePersonal, 
+         updatePersonal } from "../services/personal.service";
 
 export const crearPersonal = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -28,7 +32,6 @@ export const obtenerPersonalPorId = async (req: Request, res: Response): Promise
         const { id } = req.params;
 
         const personal = await getPersonalById(id);
-
         if (!personal) return res.status(404).json({ message: 'Personal not found' });
 
         return res.status(200).json(personal);
@@ -59,7 +62,6 @@ export const actualizarPersonal = async (req: Request, res: Response): Promise<a
     try {
         
         const {id} = req.params;
-
         const { nombres, apellidos, ci, fecha_inicio_contratacion, fecha_fin_contratacion} = req.body;
 
         const data = {
@@ -70,46 +72,26 @@ export const actualizarPersonal = async (req: Request, res: Response): Promise<a
             fecha_fin_contratacion 
         }
 
-        const updatedPersonal = await updatePersonal(id, data );
-
+        const updatedPersonal = await updatePersonal(id, data);
         if (!updatedPersonal) return res.status(404).json({ message: 'Personal not found' });
 
         return res.status(200).json(updatedPersonal);
+
     } catch (error) {
         console.error(error);
         return res.status(500).json({ status: 'error', message: 'Internal Server Error' });
     }
 };
 
-export const actualizarPersonalParcial = async (req: Request, res: Response): Promise<any> => {
-    try {
-
-        const {id} = req.params;
-
-        const personalToUpdate:any = await Personal.findOneBy({
-            id: id,
-        })
-
-        // Actualizar los campos del recurso
-        personalToUpdate.estado = !personalToUpdate.estado;
-
-        // Guardar los cambios en la base de datos
-        const updatedPersonal = await Personal.save(personalToUpdate);
-
-        return res.status(200).json(updatedPersonal);
-        
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Error al obtener los personales.' });
-    }
-};
-
 export const eliminarPersonal = async (req: Request, res: Response): Promise<any> => {
     try {
         const {id} = req.params;
+
         const isDeleted = await softDeletePersonal(id);
         if (!isDeleted) return res.status(404).json({ message: 'Personal not found' });
+
         return res.status(200).json({ message: 'Personal deleted successfully' });
+        
     } catch (error) {
         console.error(error);
         return res.status(500).json({ status: 'error', message: 'Internal Server Error' });

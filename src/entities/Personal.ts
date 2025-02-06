@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Perfil } from "./Perfil";
 
 
@@ -13,7 +13,9 @@ export class Personal extends BaseEntity {
     @Column()
     apellidos: string;
 
-    @Column()
+    @Column({
+        unique: true
+    })
     ci: string;
 
     @Column({
@@ -29,17 +31,18 @@ export class Personal extends BaseEntity {
     fecha_fin_contratacion: Date;
 
     // Relación de uno a uno con Perfil, siendo opcional (nullable: true)
-    @OneToOne(() => Perfil, (perfil) => perfil.personal, { nullable: true })  // Un Personal puede tener 0 o 1 Perfil
+    // Un Personal puede tener 0 o 1 Perfil
+    @OneToOne(
+        () => Perfil, (perfil) => perfil.personal,
+        { nullable: true }
+    )  
     @JoinColumn({ name: 'perfil' })  // Clave foránea que apunta a Perfil
     perfil: Perfil | null;  // Puede ser null si no tiene un Perfil asociado
 
-    @Column({ nullable: true })
-    cargo: string;
-
-    @Column({
-        default: true 
+    @Column({ 
+        nullable: true 
     })
-    estado: boolean;
+    cargo: string;
 
     @CreateDateColumn()
     fecha_creacion: Date;
@@ -48,5 +51,15 @@ export class Personal extends BaseEntity {
     fecha_actualizacion: Date;
 
     @DeleteDateColumn()
-    deletedAt: Date;
+    fecha_eliminacion: Date;
+
+    // Getter personalizado para la respuesta JSON
+    toJSON() {
+        const { fecha_eliminacion, id, ...personal } = this;  // Excluimos 'id' y otras propiedades si es necesario
+        return {
+            ...personal,
+            uid: id,  // Renombramos 'id' a 'uid'
+        };
+    }
 }
+// deletedAt: Date;
