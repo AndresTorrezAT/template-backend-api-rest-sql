@@ -1,0 +1,36 @@
+services:
+  backend:
+    build:
+      context: .  # Usa el Dockerfile de producción
+      dockerfile: Dockerfile.prod
+    # image: ghcr.io/besuto-srl/sistema-pos-backend:latest  # Usa la imagen desde GHCR
+    ports:
+      - "3000:3000"                   # Expone el puerto 3000 del contenedor
+    environment:
+      - NODE_ENV=production  # Modo de producción
+      - SERVER_PORT=3000
+      - PG_HOST=postgres_db
+      - PG_PORT=5432
+      - PG_USER=postgres
+      - PG_PASS=atorrez
+      - PG_DATABASE=posdb
+      - SECRETORPRIVATEKEY=Est03sMyPub1cK3y
+    depends_on:
+      - postgres
+    restart: always
+
+  postgres:
+    image: postgres:17.2
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: atorrez
+      POSTGRES_DB: posdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
