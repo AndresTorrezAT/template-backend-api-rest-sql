@@ -1,0 +1,30 @@
+services:
+  backend:
+    build: .
+    volumes:
+      - ./src:/usr/src/app/src       # Vuelve a cargar cambios en tiempo real
+    ports:
+      - "3000:3000"                   # Expone el puerto 3000 del contenedor
+    command: npm run dev              # Usa un comando para correr el backend en modo de desarrollo
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true      #Para que funcione hot reload en Windows + WSL
+    depends_on:
+      - postgres
+
+
+  postgres:
+    image: postgres:17.2
+    container_name: postgres_db
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: atorrez
+      POSTGRES_DB: posdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

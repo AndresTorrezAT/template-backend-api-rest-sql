@@ -1,7 +1,11 @@
 import "reflect-metadata"; // Siempre al inicio
-
 import dotenv from "dotenv";
-dotenv.config(); // Carga las variables de entorno desde el archivo .env
+
+
+// Cargar el archivo correspondiente solo en desarrollo
+if (process.env.NODE_ENV !== "production") {
+    dotenv.config({ path: ".env.development" });
+}
 
 import Server from './server';
 const server = new Server();

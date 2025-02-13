@@ -1,0 +1,9 @@
+{
+    "perfiles": [
+        {
+            "usuario": "besuto",
+            "password": "1234567",
+            "tipo": "administrador"
+        }
+    ]
+}

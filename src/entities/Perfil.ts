@@ -30,8 +30,11 @@ export class Perfil extends BaseEntity {
     estado: boolean;
 
     // Relación inversa, no es necesario poner @JoinColumn en Perfil
-    @OneToOne(() => Personal, (personal) => personal.perfil )
-    personal: Personal;  // Puede ser null si no hay un Personal asociado
+    @OneToOne(
+        () => Personal, (personal) => personal.perfil,
+        { nullable: true } 
+    )
+    personal: Personal | null;  // Puede ser null si no hay un Personal asociado
 
     @CreateDateColumn()
     fecha_creacion: Date;
